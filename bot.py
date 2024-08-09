@@ -20,4 +20,12 @@ if __name__ == "__main__" :
     api_id=Config.API_ID,
     api_hash=Config.API_HASH,
     plugins=plugins)
+    try:
     Warrior.run()
+except BadMsgNotification as e:
+    if e.error_code == 16:
+        print("Clock synchronization issue. Retrying in 1 minute.")
+        time.sleep(60)
+        Warrior.run()
+    else:
+        raise
